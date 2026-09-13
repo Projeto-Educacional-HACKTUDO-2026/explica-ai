@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Explica Aí! — HACKTUDO 2026</title>
+<style>
+  @font-face { font-family: "Bricolage"; src: url("fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; }
+  @font-face { font-family: "Geist"; src: url("fonts/geist-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Anton"; src: url("fonts/anton-latin-400-normal.woff2") format("woff2"); }
+
+  @page { size: 1920px 1080px; margin: 0; }
+  :root {
+    --violeta: #7c3aed; --violeta-2: #6d28d9; --rosa: #ec4899; --laranja: #fb923c; --limao: #bef264; --limao-escuro: #365314;
+    --tinta: #1e1433; --tinta-2: #5b5270; --papel: #fbf9ff; --linha: #ebe5f5;
+    --brand: linear-gradient(135deg, #7c3aed, #db2777);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #222; }
+  body { font-family: "Geist", "Segoe UI", sans-serif; color: var(--tinta); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3, .titulo { font-family: "Bricolage", "Geist", sans-serif; letter-spacing: -0.02em; }
+  .emoji { font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+
+  .slide {
+    position: relative; width: 1920px; height: 1080px; overflow: hidden; page-break-after: always; break-after: page;
+    background: var(--papel); padding: 96px 120px;
+    background-image:
+      radial-gradient(900px 600px at -5% -10%, rgba(124,58,237,.10), transparent 60%),
+      radial-gradient(800px 500px at 110% 0%, rgba(236,72,153,.09), transparent 60%),
+      radial-gradient(700px 500px at 60% 115%, rgba(190,242,100,.18), transparent 60%);
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .escuro { background: #160a2b; color: #fff;
+    background-image:
+      radial-gradient(1000px 700px at 0% 0%, rgba(124,58,237,.55), transparent 60%),
+      radial-gradient(900px 700px at 100% 100%, rgba(219,39,119,.45), transparent 60%),
+      radial-gradient(600px 400px at 85% 10%, rgba(190,242,100,.18), transparent 60%);
+  }
+
+  /* Rodapé */
+  .rodape { position: absolute; left: 120px; right: 120px; bottom: 44px; display: flex; justify-content: space-between; align-items: center; font-size: 20px; color: var(--tinta-2); }
+  .escuro .rodape { color: rgba(255,255,255,.6); }
+  .rodape .marca { display: flex; align-items: center; gap: 10px; font-family: "Bricolage"; font-weight: 700; color: var(--tinta); }
+  .escuro .rodape .marca { color: #fff; }
+  .logo-mini { width: 34px; height: 34px; border-radius: 10px; background: var(--brand); display: grid; place-items: center; font-size: 18px; transform: rotate(-6deg); }
+
+  /* Tipografia utilitária */
+  .kicker { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 999px; background: var(--limao); color: var(--limao-escuro); font-weight: 700; font-size: 22px; letter-spacing: .02em; }
+  .h-slide { font-size: 76px; line-height: 1.02; font-weight: 800; margin-top: 26px; max-width: 1500px; }
+  .grad { background: linear-gradient(100deg, #7c3aed, #db2777 60%, #fb923c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: 32px; line-height: 1.45; color: var(--tinta-2); margin-top: 22px; max-width: 1400px; }
+  .escuro .lead { color: rgba(255,255,255,.8); }
+
+  .cartao { background: #fff; border: 2px solid var(--linha); border-radius: 36px; padding: 36px; box-shadow: 0 20px 50px -30px rgba(76, 29, 149, .35); }
+  .cartao h3 { font-size: 36px; font-weight: 700; line-height: 1.1; margin-top: 14px; }
+  .cartao p { font-size: 25px; line-height: 1.45; color: var(--tinta-2); margin-top: 10px; }
+  .icone { font-size: 58px; line-height: 1; }
+
+  /* Molduras */
+  .celular { width: 340px; border-radius: 52px; padding: 13px; background: #0f0a19; box-shadow: 0 50px 80px -30px rgba(30, 10, 60, .55), inset 0 0 0 2px #2c2440; }
+  .celular img { display: block; width: 100%; height: 680px; object-fit: cover; object-position: top; border-radius: 40px; }
+  .navegador { border-radius: 28px; overflow: hidden; background: #fff; box-shadow: 0 40px 90px -35px rgba(30, 10, 60, .45); border: 2px solid var(--linha); }
+  .navegador .barra { height: 44px; background: #f2eef9; display: flex; align-items: center; gap: 10px; padding: 0 20px; }
+  .navegador .barra i { width: 14px; height: 14px; border-radius: 50%; background: #d9d2e6; display: block; }
+  .navegador .barra i:nth-child(1) { background: #fb7185; } .navegador .barra i:nth-child(2) { background: #fbbf24; } .navegador .barra i:nth-child(3) { background: #4ade80; }
+  .navegador .barra span { margin-left: 18px; font-size: 17px; color: #8b83a0; background: #fff; border-radius: 999px; padding: 4px 18px; }
+  .navegador img { display: block; width: 100%; }
+
+  .etiqueta { position: absolute; display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 22px; padding: 16px 24px; font-size: 24px; font-weight: 600; box-shadow: 0 20px 40px -18px rgba(60, 20, 110, .45); border: 2px solid var(--linha); white-space: nowrap; }
+  .etiqueta .emoji { font-size: 32px; }
+
+  /* Meme */
+  .meme-classico { position: relative; aspect-ratio: 1; border-radius: 28px; overflow: hidden; background: linear-gradient(135deg, #38bdf8, #6366f1 50%, #d946ef); display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 22px; text-align: center; }
+  .meme-txt { font-family: "Anton", Impact, sans-serif; color: #fff; text-transform: uppercase; line-height: 1.05; font-size: 34px;
+    text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, 3px -3px 0 #000, -3px -3px 0 #000, 0 3px 0 #000, 3px 0 0 #000, 0 -3px 0 #000, -3px 0 0 #000; }
+  .onda { display: flex; align-items: center; gap: 5px; height: 70px; }
+  .onda b { flex: 1; border-radius: 99px; background: var(--violeta); min-width: 5px; }
+  .onda b.off { background: rgba(124,58,237,.25); }
+
+  .tabela { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 26px; }
+  .tabela th, .tabela td { padding: 20px 26px; text-align: left; border-bottom: 2px solid var(--linha); }
+  .tabela th { font-family: "Bricolage"; font-size: 28px; color: var(--tinta-2); font-weight: 700; }
+  .tabela tr:last-child td { border-bottom: 0; }
+  .tabela-justa th, .tabela-justa td { padding: 14px 24px; }
+  .sim { color: #047857; font-weight: 700; }
+  .nao { color: #9a8fae; }
+
+  .pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #fff; border: 2px solid var(--linha); font-size: 24px; font-weight: 600; }
+  .escuro .pill { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.18); color: #fff; }
+  .num { font-family: "Bricolage"; font-weight: 800; font-size: 96px; line-height: 1; }
+  .compacto .cartao { padding: 26px 28px; }
+  .compacto .cartao h3 { font-size: 30px; margin-top: 10px; }
+  .compacto .cartao p { font-size: 22px; margin-top: 6px; }
+  .compacto .icone { font-size: 44px; }
+  .numeros .cartao { padding: 22px 28px !important; }
+  .numeros .num { font-size: 76px; }
+</style>
+</head>
+<body>
+
+<!-- 1 · CAPA -->
+<section class="slide escuro">
+  <div style="display:flex; align-items:center; gap:18px;">
+    <div class="logo-mini emoji" style="width:72px;height:72px;border-radius:22px;font-size:38px;box-shadow:0 20px 40px -10px rgba(236,72,153,.6)">💬</div>
+    <span class="pill"><span class="emoji">🏆</span> HACKTUDO 2026</span>
+  </div>
+
+  <h1 style="font-size:180px; line-height:.92; font-weight:800; margin-top:60px;">Explica<br/><span class="grad">Aí!</span></h1>
+  <p style="font-family:Bricolage; font-size:56px; font-weight:700; margin-top:36px; line-height:1.1; max-width:900px;">Quem explica,<br/>aprende duas vezes. <span class="emoji">🧠</span></p>
+  <p class="lead" style="max-width:820px; font-size:30px;">O celular deixa de ser distração e vira ferramenta de aprendizagem ativa — com a técnica de Feynman e bem-estar digital.</p>
+
+  <div style="position:absolute; right:130px; top:120px; width:760px; height:860px;">
+    <div class="celular" style="position:absolute; left:0; top:90px; transform:rotate(-8deg);"><img src="img/mobile-drake.png" alt="" /></div>
+    <div class="celular" style="position:absolute; right:0; top:0; transform:rotate(6deg);"><img src="img/mobile-inicio.png" alt="" /></div>
+  </div>
+
+  <div class="rodape"><span>Uso consciente de smartphones nas escolas · tecnologia + educação + saúde mental</span><span>2026</span></div>
+</section>
+
+<!-- 2 · DESAFIO -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">🎯</span> O desafio</span>
+  <h2 class="h-slide">O celular já está na sala de aula.<br/><span class="grad">A questão é o que ele faz lá.</span></h2>
+  <p class="lead">Desenvolver soluções inovadoras que permitam a utilização consciente dos smartphones nas escolas, integrando tecnologia, metodologias educacionais e promoção da saúde mental.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:36px; margin-top:64px;">
+    <div class="cartao"><div class="icone emoji">📱</div><h3>Distração</h3><p>Apps disputam atenção com rolagem infinita e notificações a qualquer hora.</p></div>
+    <div class="cartao"><div class="icone emoji">🦜</div><h3>Aprendizagem passiva</h3><p>Decorar e marcar alternativa não garante entender. O aluno repete, mas não explica.</p></div>
+    <div class="cartao"><div class="icone emoji">😮‍💨</div><h3>Saúde mental</h3><p>Rankings e comparação constante geram ansiedade e desmotivam quem aprende em outro ritmo.</p></div>
+  </div>
+
+  <div style="margin-top:44px; display:flex; align-items:center; gap:18px; font-size:26px; color:var(--tinta-2);">
+    <span class="emoji" style="font-size:36px">⚖️</span>
+    <span>A <strong style="color:var(--tinta)">Lei nº 15.100/2025</strong> restringe o celular nas escolas, mas preserva o <strong style="color:var(--tinta)">uso pedagógico</strong>. Nossa proposta é um uso pedagógico que valha a pena.</span>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 02</span></div>
+</section>
+
+<!-- 3 · IDEIA / FEYNMAN -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">💡</span> A ideia</span>
+  <h2 class="h-slide">Aprender explicando,<br/>com a <span class="grad">técnica de Feynman</span>.</h2>
+  <p class="lead">Se você consegue explicar algo de forma simples, com as suas palavras, é porque entendeu. Se trava, descobriu exatamente o que precisa estudar.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:28px; margin-top:70px; position:relative;">
+    <div class="cartao" style="padding:34px"><div class="num grad">1</div><h3>Escolha um conceito</h3><p>O professor define o tópico e lança o desafio.</p></div>
+    <div class="cartao" style="padding:34px"><div class="num grad">2</div><h3>Explique simples</h3><p>Como se fosse para uma criança, um amigo ou a avó.</p></div>
+    <div class="cartao" style="padding:34px"><div class="num grad">3</div><h3>Encontre as lacunas</h3><p>O feedback mostra o que ainda não ficou claro.</p></div>
+    <div class="cartao" style="padding:34px"><div class="num grad">4</div><h3>Refaça e domine</h3><p>Nova tentativa, sem punição. Vale a melhor.</p></div>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 03</span></div>
+</section>
+
+<!-- 4 · COMO FUNCIONA -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">🔄</span> Como funciona</span>
+  <h2 class="h-slide">Explicar, receber feedback, <span class="grad">evoluir</span>.</h2>
+  <p class="lead">Um ciclo curto, que cabe em poucos minutos de aula ou de casa.</p>
+
+  <div style="display:flex; align-items:stretch; gap:22px; margin-top:50px;">
+    <div class="cartao" style="flex:1; text-align:center"><div class="icone emoji">👩‍🏫</div><h3>Professor lança</h3><p>Meme, texto, áudio, imagem ou vídeo, com prazo e limite de tempo ou caracteres.</p></div>
+    <div style="display:grid; place-items:center; font-size:60px; color:#c4b5fd">➜</div>
+    <div class="cartao" style="flex:1; text-align:center"><div class="icone emoji">🎙️</div><h3>Aluno explica</h3><p>Em áudio ou texto corrido, sem apagar — só reiniciando. Declara se usou IA.</p></div>
+    <div style="display:grid; place-items:center; font-size:60px; color:#c4b5fd">➜</div>
+    <div class="cartao" style="flex:1; text-align:center"><div class="icone emoji">💌</div><h3>Feedback</h3><p>Nota de 1 a 3 com justificativa. O aluno vê quem avaliou: professor ou monitor.</p></div>
+    <div style="display:grid; place-items:center; font-size:60px; color:#c4b5fd">➜</div>
+    <div class="cartao" style="flex:1; text-align:center"><div class="icone emoji">🔁</div><h3>Evolui</h3><p>Ganha XP, revela o mosaico e pode refazer até dominar o conteúdo.</p></div>
+  </div>
+
+  <div class="cartao" style="margin-top:32px; padding:26px 36px; display:flex; align-items:center; gap:30px; background:linear-gradient(90deg,#f5f3ff,#fdf2f8); border-color:#e9d5ff;">
+    <span class="emoji" style="font-size:64px">🔍</span>
+    <p style="margin:0; font-size:30px; color:var(--tinta)"><strong>E o professor fecha o ciclo:</strong> o painel mostra quais conceitos a turma ainda não entendeu, para retomar em aula.</p>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 04</span></div>
+</section>
+
+<!-- 5 · TIPOS DE DESAFIO -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">😂</span> Desafios</span>
+  <h2 class="h-slide" style="font-size:66px">Na língua da turma: <span class="grad">memes, textos e áudios</span></h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; margin-top:48px; align-items:stretch;">
+    <div class="cartao" style="padding:28px">
+      <div class="meme-classico" style="aspect-ratio:auto; height:400px;">
+        <div class="meme-txt">O ônibus freia do nada</div>
+        <div class="emoji" style="font-size:100px; line-height:1">🚌💨🧍</div>
+        <div class="meme-txt">Meu corpo continuando a viagem sozinho</div>
+      </div>
+      <h3>Meme educacional</h3>
+      <p>“Explique o meme usando a ideia de inércia.”</p>
+    </div>
+
+    <div class="cartao" style="padding:28px">
+      <div style="border-radius:24px; background:#fdf2f8; padding:30px; border-left:8px solid var(--rosa); font-size:26px; line-height:1.5; height:280px;">
+        Seu amigo Caio jura que as plantas crescem porque “comem” a terra: <em>“Olha o tamanho daquela árvore! Ela tirou tudo isso do chão.”</em>
+      </div>
+      <div style="margin-top:22px; border-radius:24px; background:#ecfccb; padding:22px 26px; font-size:24px; color:#1a2e05; font-weight:600;"><span class="emoji">🎯</span> Explique pro Caio em até 280 caracteres.</div>
+      <h3>Texto</h3>
+      <p>Situações do dia a dia, citações e mini-histórias.</p>
+    </div>
+
+    <div class="cartao" style="padding:28px">
+      <div style="border-radius:24px; background:#f5f3ff; padding:28px; height:280px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <div style="width:74px;height:74px;border-radius:50%;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:32px;flex:none">▶</div>
+          <div class="onda" style="flex:1">
+            <b style="height:40%"></b><b style="height:75%"></b><b style="height:55%"></b><b style="height:95%"></b><b style="height:60%"></b><b style="height:80%"></b><b style="height:35%"></b><b style="height:70%"></b><b style="height:90%"></b><b class="off" style="height:50%"></b><b class="off" style="height:75%"></b><b class="off" style="height:40%"></b><b class="off" style="height:85%"></b><b class="off" style="height:55%"></b><b class="off" style="height:30%"></b><b class="off" style="height:65%"></b>
+          </div>
+          <span style="font-weight:700; font-size:22px; border:2px solid #ddd6fe; border-radius:99px; padding:6px 14px;">2x</span>
+        </div>
+        <p style="font-size:24px; color:var(--tinta); margin-top:22px; line-height:1.45;">“Se a luz do sol é branca, cheia de cores, por que quase todas as folhas são verdes?”</p>
+        <p style="font-size:20px; margin-top:10px;"><span class="emoji">🎙️</span> Profa. Marina</p>
+      </div>
+      <div style="margin-top:22px; border-radius:24px; background:#ecfccb; padding:22px 26px; font-size:24px; color:#1a2e05; font-weight:600;"><span class="emoji">🎙️</span> Responda em áudio de até 1:30.</div>
+      <h3>Áudio</h3>
+      <p>Perguntas e mini-podcasts, ouvidos em até 2x.</p>
+    </div>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>+ imagens e vídeos · HACKTUDO 2026 · 05</span></div>
+</section>
+
+<!-- 6 · EXPERIÊNCIA DO ALUNO -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">🎒</span> Para o aluno</span>
+  <h2 class="h-slide" style="font-size:66px">Explicar com as <span class="grad">próprias palavras</span></h2>
+
+  <div style="position:absolute; left:120px; top:290px; width:1080px;">
+    <div class="navegador"><div class="barra"><i></i><i></i><i></i><span>explicaai.app/desafios</span></div><img src="img/aluno-desafio.png" alt="" /></div>
+  </div>
+  <div class="celular" style="position:absolute; right:140px; top:210px; transform:rotate(3deg);"><img src="img/mobile-feedback.png" style="height:700px" alt="" /></div>
+
+  <div class="etiqueta" style="left:1000px; top:520px;"><span class="emoji">✋</span> Não dá pra apagar: só reiniciar</div>
+  <div class="etiqueta" style="left:860px; top:890px;"><span class="emoji">🤖</span> Usou IA? É só declarar (−50% de XP)</div>
+  <div class="etiqueta" style="right:110px; top:110px;"><span class="emoji">💌</span> Feedback + quem avaliou</div>
+  <div class="etiqueta" style="left:70px; top:930px;"><span class="emoji">⚡</span> Prévia do XP antes de enviar</div>
+
+  <div class="rodape" style="justify-content:flex-end"><span>HACKTUDO 2026 · 06</span></div>
+</section>
+
+<!-- 7 · BEM-ESTAR -->
+<section class="slide escuro">
+  <span class="kicker"><span class="emoji">🌿</span> Uso consciente</span>
+  <h2 class="h-slide">Um app que <span class="grad">não quer te prender</span></h2>
+  <p class="lead">Cada mecânica foi pensada para foco e saúde mental — não para tempo de tela.</p>
+
+  <div class="compacto" style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:44px;">
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">🙅</div><h3>Zero ranking</h3><p style="color:rgba(255,255,255,.72)">Ninguém vê o XP dos colegas. Sem pódio, sem vergonha.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">🪞</div><h3>Você vs. você</h3><p style="color:rgba(255,255,255,.72)">A única comparação é com a sua semana passada.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">🔕</div><h3>Silêncio 22h–7h</h3><p style="color:rgba(255,255,255,.72)">Nenhuma notificação à noite. Professores recebem um resumo por dia.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">⏱️</div><h3>Sessões curtas</h3><p style="color:rgba(255,255,255,.72)">Um desafio por vez, tempo de tela visível e lembrete de pausa aos 20 min.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">🌱</div><h3>Não punitivo</h3><p style="color:rgba(255,255,255,.72)">Nota 1 é “pode ser melhor”. Refazer nunca tira XP.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">🧩</div><h3>Meta coletiva</h3><p style="color:rgba(255,255,255,.72)">O mosaico da turma só se completa quando todos chegam lá.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">🤝</div><h3>IA com honestidade</h3><p style="color:rgba(255,255,255,.72)">Declarar uso de IA reduz o XP, sem outras consequências.</p></div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#fff; box-shadow:none"><div class="icone emoji">✍️</div><h3>Foco na escrita</h3><p style="color:rgba(255,255,255,.72)">Texto corrido, sem colar e sem apagar: pensar antes de digitar.</p></div>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 07</span></div>
+</section>
+
+<!-- 8 · GAMIFICAÇÃO -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">⚡</span> Gamificação saudável</span>
+  <h2 class="h-slide" style="font-size:66px">Motivação que <span class="grad">recompensa entender</span></h2>
+
+  <div style="display:grid; grid-template-columns:760px 1fr; gap:56px; margin-top:54px;">
+    <div>
+      <div class="cartao" style="padding:10px 16px;">
+        <table class="tabela tabela-justa">
+          <tr><th>Nota</th><th>Avaliação</th><th style="text-align:right">XP</th></tr>
+          <tr><td style="font-family:Bricolage;font-weight:800;font-size:34px">3</td><td><span class="emoji">🤩</span> Excelente resposta</td><td style="text-align:right;font-weight:800">100%</td></tr>
+          <tr><td style="font-family:Bricolage;font-weight:800;font-size:34px">2</td><td><span class="emoji">👍</span> Boa resposta</td><td style="text-align:right;font-weight:800">75%</td></tr>
+          <tr><td style="font-family:Bricolage;font-weight:800;font-size:34px">1</td><td><span class="emoji">🌱</span> Pode ser melhor</td><td style="text-align:right;font-weight:800">20%</td></tr>
+          <tr><td style="font-size:34px" class="emoji">🤖</td><td>Declarou uso de IA</td><td style="text-align:right;font-weight:800">−50 p.p.</td></tr>
+        </table>
+      </div>
+      <div style="margin-top:28px; font-family:Bricolage; font-size:30px; font-weight:700;">Títulos por XP total</div>
+      <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+        <span class="pill"><span class="emoji">🐣</span> Curioso</span>
+        <span class="pill"><span class="emoji">🧭</span> Explorador</span>
+        <span class="pill"><span class="emoji">💬</span> Explicador</span>
+        <span class="pill"><span class="emoji">🧪</span> Cientista de Bolso</span>
+        <span class="pill" style="background:var(--limao);border-color:var(--limao);color:var(--limao-escuro)"><span class="emoji">🧠</span> Mestre Feynman</span>
+      </div>
+      <p class="lead" style="font-size:25px; margin-top:22px;"><span class="emoji">🏅</span> Emblemas criados pelo professor, automáticos por XP ou concedidos por conquistas da sala.</p>
+    </div>
+
+    <div style="position:relative">
+      <div class="navegador"><div class="barra"><i></i><i></i><i></i><span>Mosaico da turma</span></div>
+        <div style="height:425px; overflow:hidden;"><img src="img/mosaico.png" style="width:122%; max-width:none; margin-left:-22%; margin-top:-265px" alt="" /></div>
+      </div>
+      <div class="etiqueta" style="left:40px; top:520px;"><span class="emoji">🧩</span> Cada XP revela uma peça da imagem da turma</div>
+    </div>
+  </div>
+  <div class="rodape" style="justify-content:flex-end"><span>HACKTUDO 2026 · 08</span></div>
+</section>
+
+<!-- 9 · PROFESSOR -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">👩‍🏫</span> Para o professor</span>
+  <h2 class="h-slide" style="font-size:66px">Enxergar <span class="grad">o que a turma ainda não entendeu</span></h2>
+
+  <div style="display:grid; grid-template-columns:1080px 1fr; gap:60px; margin-top:54px;">
+    <div class="navegador" style="align-self:start"><div class="barra"><i></i><i></i><i></i><span>explicaai.app/inicio</span></div><img src="img/prof-inicio.png" alt="" /></div>
+    <div style="display:flex; flex-direction:column; gap:22px; font-size:27px; line-height:1.4;">
+      <div style="display:flex; gap:18px"><span class="emoji" style="font-size:42px">🔍</span><div><strong>Lacunas da turma</strong><br/><span style="color:var(--tinta-2)">Desafios com menor média e distribuição das notas.</span></div></div>
+      <div style="display:flex; gap:18px"><span class="emoji" style="font-size:42px">📥</span><div><strong>Fila de avaliação</strong><br/><span style="color:var(--tinta-2)">Nota 1–3, prévia do XP e sugestões de feedback.</span></div></div>
+      <div style="display:flex; gap:18px"><span class="emoji" style="font-size:42px">🛡️</span><div><strong>Alunos monitores</strong><br/><span style="color:var(--tinta-2)">Ajudam a avaliar e controlar tentativas.</span></div></div>
+      <div style="display:flex; gap:18px"><span class="emoji" style="font-size:42px">🌎</span><div><strong>Biblioteca pública</strong><br/><span style="color:var(--tinta-2)">Tópicos compartilhados entre professores.</span></div></div>
+      <div style="display:flex; gap:18px"><span class="emoji" style="font-size:42px">⚙️</span><div><strong>Controle total</strong><br/><span style="color:var(--tinta-2)">Prazos, XP, tentativas, limites de áudio e texto.</span></div></div>
+    </div>
+  </div>
+  <div class="rodape" style="justify-content:flex-end"><span>HACKTUDO 2026 · 09</span></div>
+</section>
+
+<!-- 10 · INTERAÇÃO -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">🤝</span> Interação</span>
+  <h2 class="h-slide" style="font-size:66px">A turma aprende <span class="grad">junto</span> — e se desafia</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:60px; align-items:start;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px;">
+      <div class="cartao"><div class="icone emoji">🔥</div><h3>Desafiar colegas</h3><p>Alunos criam desafios para a turma, aprovados pelo professor, e avaliam as respostas.</p></div>
+      <div class="cartao"><div class="icone emoji">🛡️</div><h3>Monitoria</h3><p>Alunos eleitos avaliam como o professor, com o nome no feedback.</p></div>
+      <div class="cartao"><div class="icone emoji">💌</div><h3>Convites e código</h3><p>Entrar numa sala leva segundos: convite no app ou código.</p></div>
+      <div class="cartao"><div class="icone emoji">🎉</div><h3>Conquistas</h3><p>Emblemas e títulos compartilháveis — celebração sem comparação.</p></div>
+    </div>
+    <div class="navegador"><div class="barra"><i></i><i></i><i></i><span>explicaai.app/avaliar</span></div><img src="img/prof-corrigir.png" alt="" /></div>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 10</span></div>
+</section>
+
+<!-- 11 · DIFERENCIAIS -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">✨</span> Por que é diferente</span>
+  <h2 class="h-slide" style="font-size:66px">Não é mais um quiz no celular</h2>
+
+  <div class="cartao" style="margin-top:56px; padding:20px 24px;">
+    <table class="tabela" style="font-size:28px">
+      <tr><th style="width:44%"></th><th style="width:28%">Quiz gamificado típico</th><th style="width:28%; color:var(--violeta)">Explica Aí!</th></tr>
+      <tr><td><strong>O que o aluno produz</strong></td><td class="nao">Marca uma alternativa</td><td class="sim">Explicação própria, em texto ou voz</td></tr>
+      <tr><td><strong>Competição</strong></td><td class="nao">Ranking e pódio</td><td class="sim">Você vs. você + meta coletiva</td></tr>
+      <tr><td><strong>Erro</strong></td><td class="nao">Perde pontos</td><td class="sim">Feedback e nova tentativa</td></tr>
+      <tr><td><strong>Notificações</strong></td><td class="nao">Para aumentar engajamento</td><td class="sim">Só o essencial, nunca 22h–7h</td></tr>
+      <tr><td><strong>IA generativa</strong></td><td class="nao">Ignorada ou proibida</td><td class="sim">Declarada com honestidade</td></tr>
+      <tr><td><strong>Para o professor</strong></td><td class="nao">Placar de acertos</td><td class="sim">Quais conceitos não foram entendidos</td></tr>
+    </table>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 11</span></div>
+</section>
+
+<!-- 12 · PROTÓTIPO -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">🛠️</span> Protótipo funcionando</span>
+  <h2 class="h-slide" style="font-size:66px">Não é só ideia: <span class="grad">dá pra usar hoje</span></h2>
+
+  <div style="display:grid; grid-template-columns:700px 1fr; gap:40px; margin-top:44px;">
+    <div class="numeros">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div class="cartao" style="padding:28px"><div class="num grad">12</div><p style="margin-top:6px">telas, do login à correção</p></div>
+        <div class="cartao" style="padding:28px"><div class="num grad">17</div><p style="margin-top:6px">desafios de exemplo</p></div>
+        <div class="cartao" style="padding:28px"><div class="num grad">11</div><p style="margin-top:6px">usuários de exemplo</p></div>
+        <div class="cartao" style="padding:28px"><div class="num grad">35</div><p style="margin-top:6px">respostas e avaliações</p></div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:26px;">
+        <span class="pill">⚛️ React</span><span class="pill">🧱 shadcn/ui</span><span class="pill">🎨 Tailwind</span><span class="pill">📱 Mobile-first</span><span class="pill">🌙 Tema escuro</span>
+      </div>
+      <p class="lead" style="font-size:25px; margin-top:28px;"><span class="emoji">✅</span> Requisitos do projeto mapeados em telas e fluxos testados de ponta a ponta: responder, avaliar, refazer, aprovar desafios e aceitar convites.</p>
+    </div>
+    <div style="display:flex; gap:28px; justify-content:flex-end; align-items:flex-start;">
+      <div class="celular" style="width:300px"><img src="img/mobile-inicio.png" style="height:600px" alt="" /></div>
+      <div class="celular" style="width:300px; margin-top:60px"><img src="img/mobile-audio.png" style="height:600px" alt="" /></div>
+      <div class="celular" style="width:300px"><img src="img/mobile-expectativa.png" style="height:600px" alt="" /></div>
+    </div>
+  </div>
+  <div class="rodape" style="justify-content:flex-end"><span>HACKTUDO 2026 · 12</span></div>
+</section>
+
+<!-- 13 · PRÓXIMOS PASSOS -->
+<section class="slide">
+  <span class="kicker"><span class="emoji">🚀</span> Próximos passos</span>
+  <h2 class="h-slide" style="font-size:66px">Do protótipo para a <span class="grad">sala de aula</span></h2>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:36px; margin-top:54px;">
+    <div class="cartao" style="border-top:10px solid var(--violeta)">
+      <div class="pill" style="background:#f5f3ff;border-color:#ddd6fe">Fase 1</div>
+      <h3 style="margin-top:22px">Piloto em uma escola</h3>
+      <p>• Backend e autenticação segura<br/>• Armazenamento de áudios<br/>• Notificações push reais<br/>• Testes com professores e alunos</p>
+    </div>
+    <div class="cartao" style="border-top:10px solid var(--rosa)">
+      <div class="pill" style="background:#fdf2f8;border-color:#fbcfe8">Fase 2</div>
+      <h3 style="margin-top:22px">Mais apoio ao professor</h3>
+      <p>• Transcrição automática das respostas em áudio<br/>• Relatórios de lacunas por turma<br/>• Biblioteca pública com curadoria</p>
+    </div>
+    <div class="cartao" style="border-top:10px solid #84cc16">
+      <div class="pill" style="background:#f7fee7;border-color:#d9f99d">Fase 3</div>
+      <h3 style="margin-top:22px">Escala</h3>
+      <p>• App instalável com modo offline<br/>• Acessibilidade auditada<br/>• Integração com o calendário escolar</p>
+    </div>
+  </div>
+
+  <div class="cartao" style="margin-top:36px; background:#160a2b; border-color:#160a2b; color:#fff; padding:34px 40px;">
+    <div style="font-family:Bricolage; font-size:34px; font-weight:700;"><span class="emoji">📏</span> O que vamos medir no piloto</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:28px; margin-top:22px; font-size:24px; line-height:1.4; color:rgba(255,255,255,.82);">
+      <div><span class="emoji" style="font-size:34px">🧠</span><br/><strong style="color:#fff">Retenção</strong> do conteúdo antes e depois dos desafios</div>
+      <div><span class="emoji" style="font-size:34px">📈</span><br/><strong style="color:#fff">Evolução</strong> das notas entre a 1ª e a 2ª tentativa</div>
+      <div><span class="emoji" style="font-size:34px">🌿</span><br/><strong style="color:#fff">Bem-estar</strong> e tempo de tela relatados pelos alunos</div>
+      <div><span class="emoji" style="font-size:34px">👩‍🏫</span><br/><strong style="color:#fff">Tempo</strong> do professor para dar feedback</div>
+    </div>
+  </div>
+  <div class="rodape"><span class="marca"><span class="logo-mini emoji">💬</span> Explica Aí!</span><span>HACKTUDO 2026 · 13</span></div>
+</section>
+
+<!-- 14 · ENCERRAMENTO -->
+<section class="slide escuro" style="display:flex; flex-direction:column; justify-content:center;">
+  <div style="display:flex; align-items:center; gap:18px;">
+    <div class="logo-mini emoji" style="width:72px;height:72px;border-radius:22px;font-size:38px">💬</div>
+    <span class="pill"><span class="emoji">🏆</span> HACKTUDO 2026</span>
+  </div>
+  <h1 style="font-size:150px; line-height:.95; font-weight:800; margin-top:50px;">Obrigado! <span class="emoji">💜</span></h1>
+  <p style="font-family:Bricolage; font-size:60px; font-weight:700; margin-top:30px; max-width:1300px; line-height:1.1;">Menos rolar a tela.<br/><span class="grad">Mais explicar o mundo.</span></p>
+
+  <div style="display:flex; gap:30px; margin-top:70px;">
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.16); color:#fff; box-shadow:none; flex:1">
+      <h3 style="margin:0"><span class="emoji">🧪</span> Experimente</h3>
+      <p style="color:rgba(255,255,255,.75); font-family:Consolas, monospace; font-size:26px; margin-top:14px">cd frontend &amp;&amp; npm install &amp;&amp; npm run dev</p>
+    </div>
+    <div class="cartao" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.16); color:#fff; box-shadow:none; flex:1.4">
+      <h3 style="margin:0"><span class="emoji">👥</span> Entre como</h3>
+      <p style="color:rgba(255,255,255,.75); margin-top:14px"><span class="emoji">🦊</span> Lucas (aluno e monitor) · <span class="emoji">🐝</span> Sofia (aluna) · <span class="emoji">👩‍🔬</span> Profa. Marina</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
