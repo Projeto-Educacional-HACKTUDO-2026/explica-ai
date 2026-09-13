@@ -158,4 +158,3 @@ XP final = XP do desafio × percentual da avaliação × fator de IA
 | Camada | Tecnologias |
 |---|---|
 | Front-end | [React](https://react.dev) e [shadcn/ui](https://ui.shadcn.com) (Tailwind CSS) |
-| Back-end | [FastAPI](https://fastapi.tiangolo.com) |
