@@ -6,17 +6,7 @@ Desafio: Desenvolver soluções inovadoras que permitam a utilização conscient
 
 
 
-Ideia: Aplicação que facilita e explora o conhecimento do aluno de forma interativa baseado na tecnica de feyman. O objetivo é o aluno explicar tópicos definidos pelo professor de forma simples mas que demonstram conhecimento.
-
-O app vai ter grande interação entre alunos e professor.
-
-
-
-Defesa: Essa solução fortalece o foco do aluno ao usar algo que é raramente utilizado no ensino tradicional que é, a capacidade de descrever sobre um assunto educacional através de suas próprias palavras e pensamentos. Isso vai gerar impacto no seu interesse e também ajudar a reter as informações facilmente com o incentivo do app e suas mecânicas de pontuação.
-
-
-
-"O Explica Aí! transforma o celular de fonte de distração em ferramenta de aprendizagem ativa. Usando a técnica de Feynman, o aluno aprende explicando com as próprias palavras, recebe feedback e refaz até dominar o conteúdo. Sessões curtas, notificações controladas e progresso sem ranking tóxico promovem uso consciente do smartphone e bem-estar: o aluno compete apenas com a sua versão de ontem. Para o professor, o app revela quais conceitos a turma ainda não entendeu."
+O Explica Aí! transforma o celular de fonte de distração em ferramenta de aprendizagem ativa. Usando a técnica de Feynman, o aluno aprende explicando com as próprias palavras, recebe feedback e refaz até dominar o conteúdo. Sessões curtas, notificações controladas e progresso sem ranking tóxico promovem uso consciente do smartphone e bem-estar: o aluno compete apenas com a sua versão de ontem. Para o professor, o app revela quais conceitos a turma ainda não entendeu.
 
 
 
@@ -128,16 +118,4 @@ Defesa: Essa solução fortalece o foco do aluno ao usar algo que é raramente u
 * Shadcn.
 
 
-
-
-
-* Prompt:
-
-
-
-❯ Crie o front-end para o projeto Explica Aí! presente em README.md. Depois, documente tudo em um novo arquivo. Deixe
-
-&#x20; bonito, moderno e jovem. Adicione emoji em alguns lugares. Crie dados e usuarios de exemplo. Exemplos de desafios
-
-&#x20; podem ser memes educacionais, textos e áudios.
 
